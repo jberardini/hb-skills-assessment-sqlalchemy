@@ -1,6 +1,7 @@
 """Models and database functions for cars db."""
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
 
 # Here's where we create the idea of our database. We're getting this through
 # the Flask-SQLAlchemy library. On db, we can find the `session`
@@ -16,15 +17,38 @@ class Model(db.Model):
     """Car model."""
 
     __tablename__ = "models"
-    pass
+
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    year = db.Column(db.Integer, nullable=False)
+    brand_name = db.Column(db.String(50), db.ForeignKey('brands.name'))
+    name = db.Column(db.String(50), nullable=False)
+
+    #define a relationship to brand
+    brand = db.relationship('Brand', backref=db.backref('models', order_by=id))
+
+    def __repr__(self):
+        """Provides representation of brand when printed"""
+
+        return '<Model id={} name={} brand_name={} year={}>'.format(self.id, self.name, 
+                                                           self.brand_name, 
+                                                           self.year)
 
 
 class Brand(db.Model):
     """Car brand."""
 
     __tablename__ = "brands"
-    pass
 
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    founded = db.Column(db.Integer)
+    headquarters = db.Column(db.String(50))
+    discontinued = db.Column(db.Integer)
+
+    def __repr__(self):
+        """Provides representation of model when printed"""
+
+        return "<Brand id={} name={}>".format(self.id, self.name)
 
 # End Part 1
 
