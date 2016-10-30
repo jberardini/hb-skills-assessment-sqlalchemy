@@ -60,7 +60,8 @@ def get_model_info(year):
     for model in models:
         print model.name
         print model.brand_name
-        print model.brand.headquarters
+        if model.brand:
+            print model.brand.headquarters
         print 
 
 
@@ -81,9 +82,9 @@ def get_brands_summary():
 
 # 1. What is the returned value and datatype of
 # ``Brand.query.filter_by(name='Ford')``?
-# The returned value is : <flask_sqlalchemy.BaseQuery object at 0x7fbaab2fbbd0>
-# This value is a base query object
-# To return a brand object, we would need to add .one(), .all(), etc. to this query object
+# The returned value is : <flask_sqlalchemy.BaseQuery object at 0x7fbaab2fbbd0>.
+# This value is a base query object.
+# To return a brand object, we would need to add .one(), .all(), etc. to this query object.
 
 # 2. In your own words, what is an association table, and what *type* of
 # relationship does an association table manage?
@@ -95,9 +96,9 @@ def get_brands_summary():
 # Part 3
 
 def search_brands_by_name(mystr):
-    brands = db.session.query(Brand).filter(Brand.name.like('%'+mystring+'%')).all()
+    brands = db.session.query(Brand).filter(Brand.name.like('%'+mystr+'%')).all()
     return brands
 
 def get_models_between(start_year, end_year):
-    models = db.session.query(Model).filter(Model.year>=start_year, Model.year < end_year).all()
+    models = db.session.query(Model).filter(Model.year >= start_year, Model.year < end_year).all()
     return models

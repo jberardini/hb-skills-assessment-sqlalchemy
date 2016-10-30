@@ -27,7 +27,7 @@ class Model(db.Model):
     brand = db.relationship('Brand', backref=db.backref('models', order_by=id))
 
     def __repr__(self):
-        """Provides representation of brand when printed"""
+        """Provides representation of model when printed"""
 
         return '<Model id={} name={} brand_name={} year={}>'.format(self.id, self.name, 
                                                            self.brand_name, 
@@ -46,7 +46,7 @@ class Brand(db.Model):
     discontinued = db.Column(db.Integer)
 
     def __repr__(self):
-        """Provides representation of model when printed"""
+        """Provides representation of brand when printed"""
 
         return "<Brand id={} name={}>".format(self.id, self.name)
 
